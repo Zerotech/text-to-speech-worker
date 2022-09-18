@@ -22,7 +22,7 @@ FROM debian:buster
 
 ENV PYTHONIOENCODING=utf-8
 WORKDIR /app
-VOLUME /app/models
+#VOLUME /app/models
 
 RUN adduser --disabled-password --gecos "app" app && \
     chown -R app:app /app
@@ -34,6 +34,6 @@ COPY --chown=app:app . .
 
 RUN python -c "import nltk; nltk.download(\"punkt\")";
 
-RUN echo "python tts_worker.py --worker \$WORKER_NAME" > entrypoint.sh
+RUN echo "python tts_worker.py --worker mari" > entrypoint.sh
 
 ENTRYPOINT ["bash", "entrypoint.sh"]

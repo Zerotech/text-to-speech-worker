@@ -10,7 +10,7 @@ from scipy.io import wavfile
 from nltk import sent_tokenize
 from marshmallow import Schema, fields, ValidationError
 from nauron import Worker, Response
-
+import soundfile
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import tensorflow as tf
 
@@ -116,7 +116,10 @@ class TTSWorker(Worker):
         out = io.BytesIO()
         wavfile.write(out, 22050, waveform.astype(np.int16))
 
-        return out.read()
+        out2 = io.BytesIO()
+        data, sr = soundfile.read(out, samplerate=8000)
+        soundfile.write(out2, data)
+        return out2.read()
 
 
 if __name__ == '__main__':
